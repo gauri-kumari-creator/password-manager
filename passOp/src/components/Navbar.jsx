@@ -2,6 +2,9 @@ import React from 'react'
 
 
 const Navbar = () => {
+  const openGitHub = ()=>{
+ window.open("https://github.com/gauri-kumari-creator","_blank")
+  }
   return (
     <nav className='bg-slate-800 text-white'>
         <div className="mycontainer w-[80%] flex justify-between items-center px-4 py-5 h-14">
@@ -11,7 +14,7 @@ const Navbar = () => {
             <span>Pass</span><span className='text-green-500'>OP/&gt;</span>
           
             </div>
-       <button className='text-white bg-green-600 w-38 rounded flex items-center justify-center'>
+       <button onClick={openGitHub} className='text-white bg-green-700 hover:bg-green-500 w-38 rounded flex items-center justify-center'>
         <i className="text-2xl  fa-brands fa-square-github"></i>
         <span className = "text-[18px] font-bold"> GitHub</span>
        </button>
