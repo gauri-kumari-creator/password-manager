@@ -9,7 +9,7 @@ const cors = require('cors')
 dotenv.config()
 
 // Connection URL
-const url = 'mongodb://localhost:27017';
+const url = process.env.MONGO_URI
 const client = new MongoClient(url);
 
 // Database Name
@@ -21,7 +21,14 @@ const port = 3000
 app.use(bodyparser.json())
 
 //Use connect method to connect to the server
- client.connect();
+//  client.connect();
+client.connect()
+    .then(() => {
+        console.log("MongoDB connected successfully")
+    })
+    .catch((err) => {
+        console.log("MongoDB connection error:", err)
+    })
 
 //Get all the passwords
 app.get('/', async (req, res) => {
