@@ -33,4 +33,8 @@ A full-stack Password Manager application built with React.js, Node.js, Express.
 
 This project was built to practice full-stack web development, React.js, backend APIs, Express.js, and MongoDB integration.
 
+##  Live Demo
+
+https://password-manager-two-azure.vercel.app
+
 
