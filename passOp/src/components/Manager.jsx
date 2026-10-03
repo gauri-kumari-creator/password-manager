@@ -33,36 +33,59 @@ const Manager = () => {
         }
     }
 
-    const savePassword =async () => {
-        if (form.site.length > 3 && form.username.length > 3 && form.password.length > 3) {
-             
-            //if any such id exist in the database deleted
-            await fetch("https://password-manager-backend-xh98.onrender.com/",{method:"DELETE",headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({id:form.id})})
-            setpasswordArray([...passwordArray, { ...form, id: uuidv4() }])
-            await fetch("https://password-manager-backend-xh98.onrender.com/",{method:"POST",headers:{"Content-Type": "application/json"},
-            body:JSON.stringify({...form, id: uuidv4()})})
-            setform({ site: "", username: "", password: "" })
-           // localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...form, id: uuidv4() }]))
+    const savePassword = async () => {
+    if (form.site.length > 3 && form.username.length > 3 && form.password.length > 3) {
 
-            toast('Password saved!', {
-                postition: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: 'dark',
-            });
-        }
-        else {
+        let id = form.id || uuidv4()
 
-            toast('Error Password not saved!')
-
+        // Agar edit ho raha hai to purana password delete hoga
+        if (form.id) {
+            await fetch("https://password-manager-backend-xh98.onrender.com/", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: form.id })
+            })
         }
 
+        // Frontend state update
+        setpasswordArray([
+            ...passwordArray.filter(item => item.id !== id),
+            { ...form, id }
+        ])
+
+        // Database me save
+        await fetch("https://password-manager-backend-xh98.onrender.com/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ ...form, id })
+        })
+
+        // Form clear
+        setform({
+            site: "",
+            username: "",
+            password: ""
+        })
+
+        toast('Password saved!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark',
+        })
+
+    } else {
+        toast('Error Password not saved!')
     }
+}
 
     const editPassword = (id) => {
         console.log("Editing password with id", { id })
