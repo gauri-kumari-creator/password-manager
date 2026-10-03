@@ -11,7 +11,7 @@ const Manager = () => {
 
     const getPasswords = async () => {
 
-        let req = await fetch("http://localhost:3000/")
+        let req = await fetch("https://password-manager-backend-xh98.onrender.com/")
         let passwords = await req.json()
         let passwordArray;
         console.log(passwords)
@@ -37,10 +37,10 @@ const Manager = () => {
         if (form.site.length > 3 && form.username.length > 3 && form.password.length > 3) {
              
             //if any such id exist in the database deleted
-            await fetch("http://localhost:3000/",{method:"DELETE",headers:{"Content-Type":"application/json"},
+            await fetch("https://password-manager-backend-xh98.onrender.com/",{method:"DELETE",headers:{"Content-Type":"application/json"},
             body:JSON.stringify({id:form.id})})
             setpasswordArray([...passwordArray, { ...form, id: uuidv4() }])
-            await fetch("http://localhost:3000/",{method:"POST",headers:{"Content-Type": "application/json"},
+            await fetch("https://password-manager-backend-xh98.onrender.com/",{method:"POST",headers:{"Content-Type": "application/json"},
             body:JSON.stringify({...form, id: uuidv4()})})
             setform({ site: "", username: "", password: "" })
            // localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...form, id: uuidv4() }]))
@@ -77,7 +77,7 @@ const Manager = () => {
 
             console.log("Deleting password with id", id)
             setpasswordArray(passwordArray.filter(item => item.id !== id))
-             let res =await fetch("http://localhost:3000/",{method:"DELETE",headers:{"Content-Type":"application/json"},
+             let res =await fetch("https://password-manager-backend-xh98.onrender.com/",{method:"DELETE",headers:{"Content-Type":"application/json"},
             body:JSON.stringify({id})})
            // localStorage.setItem("passwords", JSON.stringify(passwordArray.filter(item => item.id !== id)))
 
